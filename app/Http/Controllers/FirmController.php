@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Firm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FirmController extends Controller
 {
@@ -13,6 +14,8 @@ class FirmController extends Controller
     public function index()
     {
         //
+        $firms=Auth::user()->firm;
+        return view("firm.index",compact('firms'));
     }
 
     /**
@@ -21,6 +24,7 @@ class FirmController extends Controller
     public function create()
     {
         //
+        return view("firm.create");
     }
 
     /**
@@ -29,6 +33,25 @@ class FirmController extends Controller
     public function store(Request $request)
     {
         //
+        $info=[
+            'firm_name'=>$request->firm_name, 
+            // 'profilepic'=>$request->, 
+            'gst_no'=>$request->gst_no, 
+            'register_no'=>$request->register_no, 
+            // 'map'=>$request->map, 
+            'pan_no'=>$request->pan_no, 
+            'country'=>$request->country, 
+            'state'=>$request->state, 
+            'city'=>$request->city, 
+            'address'=>$request->address, 
+            'landmark'=>$request->landmark, 
+            'street'=>$request->street, 
+            'since'=>$request->since, 
+            'pincode'=>$request->pincode, 
+            'firm_mobile'=>$request->firm_mobile, 
+            'user_id'=>Auth::user()->id
+        ];
+        Firm::create($info);
     }
 
     /**
@@ -61,5 +84,18 @@ class FirmController extends Controller
     public function destroy(Firm $firm)
     {
         //
+    }
+    public function updateprofilepic(){
+        $firmid=request('id');
+        $fo= request('profilepic');
+        $filename=time()."_".$fo->getClientOriginalName();
+        $fo->move('./images',$filename);
+        $firm=Firm::find($firmid);
+        if($firm->profilepic){
+            unlink('./images/'. $firm->profilepic);
+        }
+        $firm->profilepic=$filename;
+        $firm->save();
+        return redirect('/firm');
     }
 }

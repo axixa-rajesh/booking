@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('firm_id');
+            $table->unsignedBigInteger('user_id');
             $table->enum('week', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']);
             $table->enum('shift',['Morning','Evening','Full Day'])->nullable();
             $table->string('start_from');
