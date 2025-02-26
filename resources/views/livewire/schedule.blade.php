@@ -28,7 +28,10 @@
                         <td class="border p-2">{{ $info['start_from'] }}</td>
                         <td class="border p-2">{{ $info['end_from'] }}</td>
                         <td class="border p-2">{{ $info['max_booking'] }}</td>
-                        <td class="border p-2">Actions</td>
+                        <td class="border p-2">
+                            <button wire:click="delete({{ $info['id'] }})" class="btn btn-danger">Delete</button>
+                            
+                        </td>
                     </tr>
                 @endforeach
                 @if (!count($allschedule))

@@ -16,7 +16,7 @@
                 <div>
                        <div class="mb-3">
                             <label class="form-label fw-bold">Select Day(s) <span class="text-danger">*</span> <small class="text-muted">(Press ctrl for multiple selection for same schedule)</small></label>
-                            <select class="form-select " style="min-height: 180px"  wire:model.live="week[]"  multiple required>
+                            <select class="form-select " style="min-height: 180px"  wire:model.live="week"  multiple required>
                                 {{-- <option value="">-- Select Day --</option> --}}
                                 <option value="Monday">Monday</option>
                                 <option value="Tuesday">Tuesday</option>
