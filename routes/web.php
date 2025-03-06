@@ -8,7 +8,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\SP;
 
 Route::get('/', function () {
-   return view("welcome");
+   return view("live");
 });
 
 // Route::get('/dashboard', function () {

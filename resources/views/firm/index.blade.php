@@ -14,7 +14,7 @@
                             <a class="nav-link active" data-bs-toggle="tab" href="#firm-{{ $index }}">Firm</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#slot-{{ $index }}">Slot</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#slot-{{ $index }}">Today Schedule</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#map-{{ $index }}">Map</a>
@@ -65,7 +65,12 @@
                         </div>
 
                         <div id="slot-{{ $index }}" class="tab-pane fade">
-                            <p>Slot-related content for {{ $firm['firm_name'] }}...</p>
+                           
+                                @livewireStyles
+                                @livewire('today-schedule', ['firm' => $firm])
+                                @livewireScripts
+                                
+                       
                         </div>
 
                         <div id="map-{{ $index }}" class="tab-pane fade">

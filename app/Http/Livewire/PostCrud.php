@@ -6,17 +6,24 @@ use App\Models\Post;
 class PostCrud extends Component
 {
 public $posts, $title, $content, $post_id;
+  public $count = 0;
+  protected $listeners = ['increaseCounter' => 'increment'];
 public $isModalOpen = false;
+
 public function __construct()
 {
         $this->title = "jai baba";
     
 }
+  public function increment()
+  {
+    $this->count++;
+  }
 public function render()
 {
-    
-$this->posts = Post::all();
-return view('livewire.post-crud');
+    return view('livewire.counter');
+// $this->posts = Post::all();
+// return view('livewire.post-crud');
 }
 
 public function create()

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Schedule extends Component
 {
+   
     public $firm, $firm_id,$id, $end_from, $start_from, $shift, $week = [], $user_id, $max_appointment;
     public $allschedule;
     public $isModalOpen = false;
@@ -57,9 +58,9 @@ class Schedule extends Component
     }
     public function delete($id)
     {
-       // dd($id);
+      
         Sc::find($id)->delete();
-        $this->render();
+        $this->allschedule = Sc::where('firm_id', $this->firm_id)->get();
     }
     public function openModal()
     {
