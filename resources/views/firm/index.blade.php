@@ -38,11 +38,11 @@
                                             @csrf
                                             <input type="hidden" name="id" value="{{ $firm->id }}"
                                                 id="">
-                                            <label for="profilepic" class="link active cursor-pointer"
+                                            <label for="profilepic_{{ $index }}" class="link active cursor-pointer"
                                                 title="Upload Profile Picture">{{ $firm['profilepic'] ? 'Edit' : 'Upload' }}
                                                 Image</label>
                                             <input type="file" name="profilepic" accept="image/*"
-                                                style="display: none" id="profilepic"
+                                                style="display: none" id="profilepic_{{ $index }}"
                                                 onchange="document.getElementById('frm_{{ $index }}').submit()">
                                         </form>
                                     </div>
@@ -93,7 +93,7 @@
                             <div class="mb-3">
                                 <button class="btn btn-success">Submit</button>
                             </div>
-                           
+                            </form>
                         </div>
                         <div id="schedule-{{ $index }}" class="tab-pane fade">
                             @livewireStyles
