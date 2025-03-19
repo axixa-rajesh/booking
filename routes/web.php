@@ -8,7 +8,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Middleware\SP;
 
 Route::get('/', function () {
-   return view("live");
+   return view("welcome");
 });
 
 // Route::get('/dashboard', function () {
@@ -16,6 +16,7 @@ Route::get('/', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth'])->group(function () {
     Route::resource('firm',FirmController::class)->middleware(SP::class);
+    Route::patch('/firm/mapupdate/{id}',[FirmController::class,'mapupdate'])->middleware(SP::class);
     Route::post('firm/updateprofilepic',[FirmController::class, 'updateprofilepic'])->middleware(SP::class);
     Route::resource('/schedule', ScheduleController::class)->middleware(SP::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

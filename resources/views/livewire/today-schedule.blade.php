@@ -23,11 +23,21 @@
                     <td class="border p-2">{{ $info['end_from'] }}</td>
                     <td class="border p-2">{{ $info['max_booking'] }}</td>
                     <td class="border p-2">
-                        {{-- <button wire:click="delete({{ $info['id'] }})" class="btn btn-danger">Delete</button> --}}
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" onclick="createsch(this.checked,'{{ $info['id'] }}')" role="switch" id="flexSwitchCheckChecked">
-                           
-                        </div>
+                        @php
+                        $istodayschedule=false;
+                        $tdsid=null;
+                        $tds=$info->is_today_schedule->toArray();
+                       foreach($tds  as $tdinfo ){
+                        if($tdinfo['todaydate']==date('Y-m-d')){
+                            $tdsid=$tdinfo['id'];
+                             $istodayschedule=true;
+                             break;
+                        }
+                       }
+                       @endphp
+                        <input class="form-check-input" type="checkbox" id="switch-{{ $info['id'] }}"
+                     wire:click="{{ $istodayschedule ? 'delete('.$tdsid.')' : 'store('.$info->id.')' }}"
+                     {{ $istodayschedule ? 'checked' : '' }}>
                     </td>
                 </tr>
             @endforeach
@@ -40,14 +50,4 @@
     </table>
 
 </div>
-<script>
-    function createsch(bool,id){
-        if(bool){
-             Livewire.emit('callMethod');
-           
-        }else{
-             //Livewire.emit('delete');
 
-        }
-    }
-</script>

@@ -11,8 +11,7 @@ use Livewire\Component;
 class TodaySchedule extends Component
 {
     public $firm,$firm_id,$todayschedule;
-    protected $listeners = ['callMethod' => 'store'];
-    
+  
     public function mount($firm = null)
     {
         $this->firm = $firm;
@@ -25,17 +24,26 @@ class TodaySchedule extends Component
         //dd($this->todayschedule);
         return view('livewire.today-schedule');
     }
-    public function store(){
-        dd("ok");
-        // $scdata=Sc::find($sid);
-        // $info=[
-        //     'schedule_id'=>$sid,
-        //     'firm_id'=>$this->firm->id,
-        //     'user_id'=>Auth::user()->id,
-        //     'week'=> $scdata->week,
-        //     'shift' => $scdata->shift,
-        //     'todaydate'=>date('Y-m-d')
-        // ];
-        // TS::create($info);        
+    public function store($sid){
+       
+        $scdata=Sc::find($sid);
+        $info=[
+            'schedule_id'=>$sid,
+            'firm_id'=>$this->firm->id,
+            'user_id'=>Auth::user()->id,
+            'week'=> $scdata->week,
+            'shift' => $scdata->shift,
+            'todaydate'=>date('Y-m-d')
+        ];
+        TS::create($info);        
+    }
+    public function delete($sid)
+    {
+        $deleted = TS::find($sid)->delete();
+        // if ($deleted) {
+        //     dd("Schedule Removed from Today Schedule!");
+        // } else {
+        //     dd("No Schedule Found to Delete!");
+        // }
     }
 }

@@ -65,17 +65,35 @@
                         </div>
 
                         <div id="slot-{{ $index }}" class="tab-pane fade">
-                           
-                                @livewireStyles
-                                @livewire('today-schedule', ['firm' => $firm])
-                                @livewireScripts
-                                
-                       
+
+                            @livewireStyles
+                            @livewire('today-schedule', ['firm' => $firm])
+                            @livewireScripts
+
+
                         </div>
 
                         <div id="map-{{ $index }}" class="tab-pane fade">
-                            <p>Map content for {{ $firm['firm_name'] }}...</p>
 
+                            <button onclick="getLocation({{ $firm['id'] }})" class="btn btn-primary">Get my location</button>
+                            <p>
+                                You can enter your Latitude and Longitude From <a href="https://map.google.com/" target="_blank">Google Map</a>
+                            </p>
+                            <form method="post" action="/firm/mapupdate/{{ $firm['id'] }}">
+                                @csrf
+                                @method('patch')
+                            <div class="mb-3">
+                                <label for="Latitude">Latitude :</label>
+                                <input type="text" name="latitude" id="latitude-{{ $firm['id']}}" value="{{ $firm['latitude'] }}">
+                            </div>
+                            <div  class="mb-3">
+                                <label for="Longitude">Longitude :</label>
+                                <input type="text" name="longitude" id="longitude-{{ $firm['id']}}" value="{{ $firm['longitude'] }}">
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-success">Submit</button>
+                            </div>
+                           
                         </div>
                         <div id="schedule-{{ $index }}" class="tab-pane fade">
                             @livewireStyles
@@ -88,4 +106,61 @@
             @endforeach
         </div>
     </div>
+    <script>
+        function getLocation(id) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition.bind(null, id), showError);
+            } else {
+                document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(id,position) {
+           
+            document.getElementById("latitude-"+id).value =  position.coords.latitude ;
+            document.getElementById("longitude-"+id).value =  position.coords.longitude ;
+               
+
+            // You can now send this data to your server if needed
+            // Example: sendLocationToServer(position.coords.latitude, position.coords.longitude);
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location").innerHTML = "User denied the request for geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("location").innerHTML = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("location").innerHTML = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("location").innerHTML = "An unknown error occurred.";
+                    break;
+            }
+        }
+
+        // Optional: Function to send location to your server
+        function sendLocationToServer(latitude, longitude) {
+            // Use AJAX (fetch or XMLHttpRequest) to send the data to your backend
+            fetch('/store-location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        latitude: latitude,
+                        longitude: longitude
+                    }),
+                })
+                .then(response => {
+                    console.log('Location sent to server:', response);
+                })
+                .catch(error => {
+                    console.error('Error sending location:', error);
+                });
+        }
+    </script>
 </x-app-layout>

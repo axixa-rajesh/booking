@@ -53,7 +53,14 @@ class FirmController extends Controller
         ];
         Firm::create($info);
     }
-
+    function mapupdate(string $id){
+        $frm=Firm::find($id);
+        $frm->latitude=request('latitude');
+        $frm->longitude = request('longitude');
+        $frm->save();
+        return redirect("/firm");
+        
+    }
     /**
      * Display the specified resource.
      */
@@ -87,6 +94,7 @@ class FirmController extends Controller
     }
     public function updateprofilepic(){
         $firmid=request('id');
+       // dd($firmid);
         $fo= request('profilepic');
         $filename=time()."_".$fo->getClientOriginalName();
         $fo->move('./images',$filename);
