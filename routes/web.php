@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FirmController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\UserInterface;
 use App\Http\Middleware\SP;
 
 Route::get('/', function () {
@@ -15,6 +16,7 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth'])->group(function () {
+    
     Route::resource('firm',FirmController::class)->middleware(SP::class);
     Route::patch('/firm/mapupdate/{id}',[FirmController::class,'mapupdate'])->middleware(SP::class);
     Route::post('firm/updateprofilepic',[FirmController::class, 'updateprofilepic'])->middleware(SP::class);
@@ -28,7 +30,8 @@ Route::get('/dashboard', function(){
     $user= Auth::user();
     switch($user->getRoleNames()[0]){
         case 'admin': return "Ye admin wala he" ;
-        case 'client': return "ye client wala he";
+        case 'client':
+            return app(UserInterface::class)->show();
         case 'service_provider': 
             if(count($user->firm)>0)
                  return app(FirmController::class)->index();
