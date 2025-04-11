@@ -83,6 +83,7 @@ class FirmController extends Controller
     public function update(Request $request, Firm $firm)
     {
         //
+        
     }
 
     /**

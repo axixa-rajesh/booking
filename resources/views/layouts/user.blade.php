@@ -52,7 +52,7 @@
             cursor: pointer;
             border-radius: 0 10px 10px 0;
             box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-            font-size: 12px;
+            font-size: 10px;
             transition: left 0.3s ease-in-out;
             writing-mode: vertical-rl;
             text-align: center;
@@ -103,19 +103,7 @@
         <h2>Booking Appointment System</h2>
     </header>
     
-    <aside class="sidebar" id="sidebar">
-        <h5>Search Firms</h5>
-        <input type="text" id="search" class="form-control" placeholder="Search...">
-        <h6 class="mt-3">Filters</h6>
-        <select class="form-select mt-2">
-            <option>All Categories</option>
-            <option>Healthcare</option>
-            <option>Legal</option>
-            <option>Finance</option>
-        </select>
-    </aside>
-    
-    <button class="toggle-indicator" id="toggleSidebar">Close</button>
+    @yield('usersidebar')
     
     <div class="container-fluid">
      

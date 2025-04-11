@@ -16,7 +16,7 @@ Route::get('/', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 Route::middleware(['auth'])->group(function () {
-    
+    Route::get('/show',[UserInterface::class,'show'])  ;
     Route::resource('firm',FirmController::class)->middleware(SP::class);
     Route::patch('/firm/mapupdate/{id}',[FirmController::class,'mapupdate'])->middleware(SP::class);
     Route::post('firm/updateprofilepic',[FirmController::class, 'updateprofilepic'])->middleware(SP::class);
